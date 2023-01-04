@@ -5,28 +5,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private int rotationSpeed = 100;
-    [SerializeField]
-    private int moveSpeed = 10;
-    [SerializeField] 
-    private int jumpForce = 4;
+    [SerializeField] private int rotationSpeed = 2;
+    [SerializeField] private int moveSpeed = 5;
+    [SerializeField] private int jumpForce = 8;
     private bool isGrounded = true;
-    [SerializeField]
+    [SerializeField] 
     private Rigidbody _playerRb;
-    Vector3 currentEulerAngles;
-    Quaternion currentRotation;
-    
-    
-    
     private void OnCollisionEnter(Collision collision)
     {
-        
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
-        
+
     }
 
     private void PlayerMovent()
@@ -41,27 +33,22 @@ public class PlayerController : MonoBehaviour
 
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
-        
+
         // Move forward and backward
-        _playerRb.transform.Translate(0,0, (verticalInput * Time.deltaTime * moveSpeed));
+
+        Vector3 movement = new Vector3(0f,0f , (verticalInput * moveSpeed * Time.deltaTime));
+       transform.Translate(movement);
+        
         
         //Player Rotation
-        float x =  0;
-        float y =  horizontalInput  * rotationSpeed;
-        //float z = verticalInput  * rotationSpeed;
-        float z =  0;
-        
-        currentEulerAngles += new Vector3(x , y, z);
-        
-        currentRotation.eulerAngles = currentEulerAngles;
-        
-        _playerRb.transform.rotation = currentRotation;
+        transform.Rotate(0f, horizontalInput * rotationSpeed, 0f);
     }
-    
+
     private void Start()
     {
-        _playerRb = this.gameObject.GetComponent<Rigidbody>();
+        _playerRb = GetComponent<Rigidbody>();
     }
+
     void Update()
     {
         PlayerMovent();
