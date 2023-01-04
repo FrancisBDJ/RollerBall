@@ -13,14 +13,14 @@ public class MeteoriteMovement : MonoBehaviour
     
     private Vector3 _direction;
 
-    [SerializeField] private float meteoritSpeed = 1.5f;
+    [SerializeField] private float meteoriteSpeed = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindWithTag("Player");
         _meteoriteRigidbody = GetComponent<Rigidbody>();
         _direction = _player.transform.position - transform.position;
-        _meteoriteRigidbody.velocity = _direction * meteoritSpeed;
+        _meteoriteRigidbody.velocity = _direction * meteoriteSpeed;
         
         
     }
