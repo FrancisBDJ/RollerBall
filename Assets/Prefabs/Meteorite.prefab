@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5912719202235560798}
   m_Layer: 0
   m_Name: Meteorite
-  m_TagString: Untagged
+  m_TagString: Meteorite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _meteoriteRigidbody: {fileID: 5912719202235560798}
-  meteoritSpeed: 1.5
+  meteoriteSpeed: 1.5
 --- !u!54 &5912719202235560798
 Rigidbody:
   m_ObjectHideFlags: 0

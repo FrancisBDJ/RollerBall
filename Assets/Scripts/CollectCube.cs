@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectCube : MonoBehaviour
 {
-       //private GameManager _gameManager;
+       private GameManager _gameManager;
        public float rotationSpeed = 20f;
       
        
@@ -12,9 +12,11 @@ public class CollectCube : MonoBehaviour
    
        public GameObject collectEffect;
        
+       
+       
        void Start()
        {
-           //_gameManager = FindObjectOfType<GameManager>();
+           _gameManager = FindObjectOfType<GameManager>();
        }
        
        public void Collect()
@@ -23,6 +25,8 @@ public class CollectCube : MonoBehaviour
                AudioSource.PlayClipAtPoint(collectSound, transform.position);
            if(collectEffect)
                Instantiate(collectEffect, transform.position, Quaternion.identity);
+           _gameManager.AddCube();
+           Destroy(gameObject);
        }
        
        private void OnTriggerEnter(Collider collision)
@@ -32,8 +36,7 @@ public class CollectCube : MonoBehaviour
               
                // Add points
                Collect();
-               //_gameManager.AddPoints();
-               Destroy(gameObject);
+               
            }
        }
        // Update is called once per frame
