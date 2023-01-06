@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,9 +14,13 @@ public class GameManager : MonoBehaviour
     private float _health = 100.0f;
     private int _cubeTotal = 7;
     private int _cubeCount = 0;
+    public bool paused;
     [SerializeField] private TextMeshProUGUI _txtCubes;
     [SerializeField] public List<GameObject> lifesUI;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private TextMeshProUGUI _txtPause;
+    [SerializeField] private Button _quitGameButton;
+    
     public int GetLevel()
     {
         return level;
@@ -41,6 +46,8 @@ public class GameManager : MonoBehaviour
         else
         {
             // Reiniciar nivel  
+            _cubeCount = 0;
+            _txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
@@ -64,6 +71,47 @@ public class GameManager : MonoBehaviour
        
     }
     
+    private void Pause()
+        {
+            if (paused == true)
+            {
+                _txtPause.gameObject.SetActive(false);
+                _quitGameButton.gameObject.SetActive(false);
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1.0f;
+                paused = false;
+            }
+    
+            else
+            {
+                _txtPause.gameObject.SetActive(true);
+                _quitGameButton.gameObject.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0.0f;
+                paused = true;
+            }
+        }
+    private void QuitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+    
+    private void InitLevel1()
+    {
+        _txtPause.gameObject.SetActive(false);
+        _quitGameButton.gameObject.SetActive(false);
+        _quitGameButton.onClick.AddListener(QuitGame);
+        Time.timeScale = 1.0f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -80,12 +128,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitLevel1();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Pause();
+        }
     }
 }
