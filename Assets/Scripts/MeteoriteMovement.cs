@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MeteoriteMovement : MonoBehaviour
 {
     // Cached reference
-    [SerializeField]
-    private GameObject _player;
-    [SerializeField]
-    private Rigidbody _meteoriteRigidbody;
+    [FormerlySerializedAs("_player")] [SerializeField]
+    private GameObject player;
+    [FormerlySerializedAs("_meteoriteRigidbody")] [SerializeField]
+    private Rigidbody meteoriteRigidbody;
 
     
     private Vector3 _direction;
@@ -17,10 +18,10 @@ public class MeteoriteMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.FindWithTag("Player");
-        _meteoriteRigidbody = GetComponent<Rigidbody>();
-        _direction = _player.transform.position - transform.position;
-        _meteoriteRigidbody.velocity = _direction * meteoriteSpeed;
+        player = GameObject.FindWithTag("Player");
+        meteoriteRigidbody = GetComponent<Rigidbody>();
+        _direction = player.transform.position - transform.position;
+        meteoriteRigidbody.velocity = _direction * meteoriteSpeed;
         
         
     }

@@ -2,48 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class  Timer : MonoBehaviour
              {
-                 [SerializeField]
-                 private GameManager _gameManager;
-                 [SerializeField] 
-                 private TextMeshProUGUI _timerText;
-                 [SerializeField] 
-                 private float _timeRemaining;
-                 [SerializeField] 
-                 private bool _timerIsRunning = false;
+                 [SerializeField] private GameManager gameManager;
+                 [SerializeField] private TextMeshProUGUI timerText;
+                 [SerializeField] private float timeRemaining;
+                 [SerializeField] private bool timerIsRunning = false;
                  
-                 void DisplayTime(float _timeToDisplay)
+                 void DisplayTime(float timeToDisplay)
                  {
-                     _timeToDisplay += 1;
-                     float minutes = Mathf.FloorToInt(_timeToDisplay / 60); 
-                     float seconds = Mathf.FloorToInt(_timeToDisplay % 60);
-                     _timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+                     timeToDisplay += 1;
+                     float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
+                     float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+                     timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
                  }
              
                  void Countdown()
                  {
-                     if (_timerIsRunning)
+                     if (timerIsRunning)
                      {
-                         if (_timeRemaining >= 0)
+                         if (timeRemaining >= 0)
                          {
-                             _timeRemaining -= Time.deltaTime;
+                             timeRemaining -= Time.deltaTime;
                          }
                      }
                      else
                      {
-                         _gameManager.GameOver();
+                         gameManager.GameOver();
                      }
-                     DisplayTime(_timeRemaining);
+                     DisplayTime(timeRemaining);
                  }
                  
                  // Start is called before the first frame update
                  void Start()
                  {
-                     _gameManager = FindObjectOfType<GameManager>();
+                     gameManager = FindObjectOfType<GameManager>();
              
-                     _timerIsRunning = true;
+                     timerIsRunning = true;
                      
                      
                  }

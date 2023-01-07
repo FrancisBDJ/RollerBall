@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private int rotationSpeed = 2;
     [SerializeField] private int moveSpeed = 5;
     [SerializeField] private int jumpForce = 8;
-    private bool isGrounded = true;
-    [SerializeField] 
-    private Rigidbody _playerRb;
+    private bool _isGrounded = true;
+    [FormerlySerializedAs("_playerRb")] [SerializeField] 
+    private Rigidbody playerRb;
     private void OnCollisionEnter(Collision collision)
     {
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            _isGrounded = true;
         }
 
     }
@@ -24,10 +25,10 @@ public class PlayerController : MonoBehaviour
     private void PlayerMovent()
     {
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            _playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _isGrounded = false;
         }
 
 
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerRb = GetComponent<Rigidbody>();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     void Update()

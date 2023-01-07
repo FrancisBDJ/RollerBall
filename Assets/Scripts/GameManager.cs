@@ -4,23 +4,25 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int lifes = 3;
     [SerializeField] private int level = 1;
-    private static GameManager instance;
+    private static GameManager _instance;
     private float _health = 100.0f;
     private int _cubeTotal = 7;
     private int _cubeCount = 0;
     public bool paused;
-    [SerializeField] private TextMeshProUGUI _txtCubes;
+    [SerializeField] private TextMeshProUGUI txtCubes;
     [SerializeField] public List<GameObject> lifesUI;
     [SerializeField] private Slider healthBar;
-    [SerializeField] private TextMeshProUGUI _txtPause;
-    [SerializeField] private Button _quitGameButton;
-    
+    [SerializeField] private TextMeshProUGUI txtPause;
+    [SerializeField] private Button quitGameButton;
+    [SerializeField] private TextMeshProUGUI txtTimer;
+    [SerializeField] private TextMeshProUGUI txtWin;
     public int GetLevel()
     {
         return level;
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
         {
             // Reiniciar nivel  
             _cubeCount = 0;
-            _txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+            txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
@@ -64,19 +66,32 @@ public class GameManager : MonoBehaviour
         }   
     }
 
+    public void WinLevel()
+    {
+        level++;
+        quitGameButton.gameObject.SetActive(true);
+        txtWin.gameObject.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0.0f;
+    }
+
     public void AddCube()
     {
         _cubeCount++;
-        _txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
-       
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+        if (_cubeCount >= _cubeTotal)
+        {
+            WinLevel();
+        }
     }
     
     private void Pause()
         {
             if (paused == true)
             {
-                _txtPause.gameObject.SetActive(false);
-                _quitGameButton.gameObject.SetActive(false);
+                txtPause.gameObject.SetActive(false);
+                quitGameButton.gameObject.SetActive(false);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Time.timeScale = 1.0f;
@@ -85,8 +100,8 @@ public class GameManager : MonoBehaviour
     
             else
             {
-                _txtPause.gameObject.SetActive(true);
-                _quitGameButton.gameObject.SetActive(true);
+                txtPause.gameObject.SetActive(true);
+                quitGameButton.gameObject.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0.0f;
@@ -104,9 +119,12 @@ public class GameManager : MonoBehaviour
     
     private void InitLevel1()
     {
-        _txtPause.gameObject.SetActive(false);
-        _quitGameButton.gameObject.SetActive(false);
-        _quitGameButton.onClick.AddListener(QuitGame);
+        txtPause.gameObject.SetActive(false);
+        txtTimer.gameObject.SetActive(false);
+        txtWin.gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(false);
+        quitGameButton.gameObject.SetActive(false);
+        quitGameButton.onClick.AddListener(QuitGame);
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -114,13 +132,13 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
