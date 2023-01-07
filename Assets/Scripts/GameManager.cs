@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button quitGameButton;
     [SerializeField] private TextMeshProUGUI txtTimer;
     [SerializeField] private TextMeshProUGUI txtWin;
+    [SerializeField] private Canvas gameManagerCanvas;
     public int GetLevel()
     {
         return level;
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
     {
        
         Time.timeScale = 0f;
+        gameManagerCanvas.gameObject.SetActive(false);
         SceneManager.LoadScene("GameOverScene");
     }
     
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
         }   
     }
 
-    public void WinLevel()
+    private void WinLevel()
     {
         level++;
         quitGameButton.gameObject.SetActive(true);
@@ -108,7 +111,8 @@ public class GameManager : MonoBehaviour
                 paused = true;
             }
         }
-    private void QuitGame()
+
+    public void QuitGame()
     {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
