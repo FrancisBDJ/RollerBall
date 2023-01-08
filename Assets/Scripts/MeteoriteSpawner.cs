@@ -5,8 +5,7 @@ using UnityEngine;
 public class MeteoriteSpawner : MonoBehaviour
 {
     // Cached references
-    [SerializeField]
-    private GameObject meteoritePrefab;
+    [SerializeField] private GameObject meteoritePrefab;
 
     private float _spawntimer = 0.0f;
     private float _meteoriteSpawnFrequency = 5f;

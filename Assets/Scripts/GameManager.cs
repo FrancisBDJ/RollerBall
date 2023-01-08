@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 7;
         _cubeCount = 0;
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
     }
 
     public void InitLevel2()
@@ -145,7 +146,25 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 15;
         _cubeCount = 0;
-        _health = 100;
+        _health = _health;
+        healthBar.value = _health;
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+    }
+    
+    public void InitLevel3()
+    {
+        txtPause.gameObject.SetActive(false);
+        txtTimer.gameObject.SetActive(true);
+        txtWin.gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(true);
+        quitGameButton.gameObject.SetActive(false);
+        quitGameButton.onClick.AddListener(QuitGame);
+        Time.timeScale = 1.0f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        _cubeTotal = 20;
+        _cubeCount = 0;
+        _health = _health;
         healthBar.value = _health;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
     }

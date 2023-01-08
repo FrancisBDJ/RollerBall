@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     private GameManager _gameManager;
+    
 
     private void Start()
     {
@@ -28,8 +30,8 @@ public class PlayerCollision : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            _gameManager.TakeDamage(20f);
+            _gameManager.TakeDamage(50f);
         }
-        
     }
+    
 }
