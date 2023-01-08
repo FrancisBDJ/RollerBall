@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 15;
         _cubeCount = 0;
-        _health = _health;
+        _health = 100.0f;
         healthBar.value = _health;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
     }
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 20;
         _cubeCount = 0;
-        _health = _health;
+        _health = 100.0f;
         healthBar.value = _health;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
     }
