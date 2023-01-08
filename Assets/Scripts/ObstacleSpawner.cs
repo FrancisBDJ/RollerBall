@@ -7,10 +7,10 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private GameObject obstaclePrefab;
     
    
-    private float xMin = -25.0f;
-    private float xMax = 25.0f;
-    private float zMin = -50.0f;
-    private float zMax = -1.0f;
+    private float xMin = -15.0f;
+    private float xMax = 35.0f;
+    private float zMin = -42.0f;
+    private float zMax = 6.0f;
     private float y = -0.45f;
     
     public void SpawnRandom()
@@ -20,8 +20,6 @@ public class ObstacleSpawner : MonoBehaviour
         float zPosition = Random.Range(zMin, zMax);
         Vector3 position = new Vector3(xPosition, y, zPosition);
         Instantiate(obstaclePrefab, position, Quaternion.identity);
-        
-        
     }
     
     void Start()
@@ -30,12 +28,6 @@ public class ObstacleSpawner : MonoBehaviour
         for(int i = 0; i < obstacles; i++)
         {
             SpawnRandom();
-       
         }
-    }
-    
-    void Update()
-    {
-       
     }
 }

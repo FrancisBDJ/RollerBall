@@ -11,22 +11,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int level = 1; //Change level value in Inspector to try the other levels 
     private static GameManager _instance;
     private float _health = 100.0f;
+    private int _score;
     private int _cubeTotal;
     private int _cubeCount;
     public bool paused;
+    [SerializeField] private TextMeshProUGUI txtScore;
     [SerializeField] private TextMeshProUGUI txtCubes;
     [SerializeField] public List<GameObject> lifesUI;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI txtPause;
+    [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitGameButton;
+    [SerializeField] private Button nextLevelButton;
     [SerializeField] private TextMeshProUGUI txtTimer;
     [SerializeField] private TextMeshProUGUI txtWin;
-    [SerializeField]private GameObject _timer;
-    public int GetLevel()
+
+    public void GoToMainMenu()
     {
-        return level;
+        SceneManager.LoadScene("Scenes/MainMenu");
     }
-    
     public void GameOver()
     {
        
@@ -65,14 +68,38 @@ public class GameManager : MonoBehaviour
         }   
     }
 
+    public void NextLevel()
+    {
+        if (level == 1)
+        {
+            level++;
+            SceneManager.LoadScene("Scenes/Level2");
+        }
+        else if (level == 2)
+        {
+            level++;
+            SceneManager.LoadScene("Scenes/Level3");
+        }
+    }
+
     private void WinLevel()
     {
-        level++;
         quitGameButton.gameObject.SetActive(true);
+        mainMenuButton.gameObject.SetActive(true);
         txtWin.gameObject.SetActive(true);
+        _score += 100;
+        txtScore.text = _score + " pts";
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0.0f;
+        if (level != 3)
+        {
+            nextLevelButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            txtWin.text = "You Winned all 3 levels. Congratulations";
+        }
     }
 
     public void AddCube()
@@ -84,6 +111,8 @@ public class GameManager : MonoBehaviour
             WinLevel();
         }
     }
+    
+    
     
     private void Pause()
         {
@@ -123,14 +152,19 @@ public class GameManager : MonoBehaviour
         txtTimer.gameObject.SetActive(false);
         txtWin.gameObject.SetActive(false);
         healthBar.gameObject.SetActive(false);
+        mainMenuButton.gameObject.SetActive(false);
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
         quitGameButton.gameObject.SetActive(false);
         quitGameButton.onClick.AddListener(QuitGame);
+        nextLevelButton.gameObject.SetActive(false);
+        nextLevelButton.onClick.AddListener(NextLevel);
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 7;
         _cubeCount = 0;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+        
     }
 
     public void InitLevel2()
@@ -139,8 +173,12 @@ public class GameManager : MonoBehaviour
         txtTimer.gameObject.SetActive(true);
         txtWin.gameObject.SetActive(false);
         healthBar.gameObject.SetActive(true);
+        mainMenuButton.gameObject.SetActive(false);
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
         quitGameButton.gameObject.SetActive(false);
         quitGameButton.onClick.AddListener(QuitGame);
+        nextLevelButton.gameObject.SetActive(false);
+        nextLevelButton.onClick.AddListener(NextLevel);
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -148,7 +186,8 @@ public class GameManager : MonoBehaviour
         _cubeCount = 0;
         _health = 100.0f;
         healthBar.value = _health;
-        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal);
+        txtScore.text = _score + " pts";
     }
     
     public void InitLevel3()
@@ -157,8 +196,12 @@ public class GameManager : MonoBehaviour
         txtTimer.gameObject.SetActive(true);
         txtWin.gameObject.SetActive(false);
         healthBar.gameObject.SetActive(true);
+        mainMenuButton.gameObject.SetActive(false);
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
         quitGameButton.gameObject.SetActive(false);
         quitGameButton.onClick.AddListener(QuitGame);
+        nextLevelButton.gameObject.SetActive(false);
+        nextLevelButton.onClick.AddListener(NextLevel);
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -166,7 +209,8 @@ public class GameManager : MonoBehaviour
         _cubeCount = 0;
         _health = 100.0f;
         healthBar.value = _health;
-        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal);
+        txtScore.text = _score + " pts";
     }
     
     private void Awake()

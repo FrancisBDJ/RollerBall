@@ -5,28 +5,21 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    public int speed = 50;
+    public float speed;
     public GameObject player;
-    [SerializeField] private Rigidbody enemyRigidbody;
-    private Vector3 _direction;
-
     
-
     // Start is called before the first frame update
     void Start()
     {
+        speed = 4.0f;
         player = GameObject.FindWithTag("Player");
-        enemyRigidbody = this.GetComponent<Rigidbody>();
-        transform.position = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.LookAt( player.transform.position, Vector3.up );
-        _direction = player.transform.position - transform.position;
-        enemyRigidbody.velocity = _direction * (speed * Time.deltaTime);
-    }
 
-    
+        transform.position += transform.forward * (speed * Time.deltaTime);
+    }
 }

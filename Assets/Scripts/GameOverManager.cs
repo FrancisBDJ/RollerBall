@@ -15,9 +15,14 @@ public class GameOverManager : MonoBehaviour
     
     private void LoadLevel1()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Scenes/Level1");
     }
     
+    private void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Scenes/MainMenu");
+    }
+
     private void QuitGame()
     {
 #if UNITY_EDITOR
@@ -36,14 +41,8 @@ public class GameOverManager : MonoBehaviour
         }
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        /*_btnMainMenu.onClick.AddListener(SceneManager.LoadScene("MainMenu");*/
+        _btnMainMenu.onClick.AddListener(GoToMainMenu);
         _btnTryAgain.onClick.AddListener(LoadLevel1);
         _btnQuitGame.onClick.AddListener(QuitGame);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
