@@ -21,28 +21,31 @@ public class  Timer : MonoBehaviour
              
                  void Countdown()
                  {
+                     
                      if (timerIsRunning)
                      {
+                         
                          if (timeRemaining >= 0)
                          {
                              timeRemaining -= Time.deltaTime;
                          }
+                         else
+                         {
+                             gameManager.LoseLife();
+                         }
                      }
-                     else
-                     {
-                         gameManager.GameOver();
-                     }
+                     
                      DisplayTime(timeRemaining);
                  }
+
                  
                  // Start is called before the first frame update
                  void Start()
                  {
                      gameManager = FindObjectOfType<GameManager>();
-             
+                     timerText = FindObjectOfType<Canvas>().GetComponentInChildren<TextMeshProUGUI>(name == "Countdown Text");
+                     timeRemaining = 180f;
                      timerIsRunning = true;
-                     
-                     
                  }
              
                  // Update is called once per frame

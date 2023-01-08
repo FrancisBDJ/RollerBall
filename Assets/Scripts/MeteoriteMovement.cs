@@ -6,10 +6,8 @@ using UnityEngine.Serialization;
 public class MeteoriteMovement : MonoBehaviour
 {
     // Cached reference
-    [FormerlySerializedAs("_player")] [SerializeField]
-    private GameObject player;
-    [FormerlySerializedAs("_meteoriteRigidbody")] [SerializeField]
-    private Rigidbody meteoriteRigidbody;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Rigidbody meteoriteRigidbody;
 
     
     private Vector3 _direction;
@@ -19,7 +17,7 @@ public class MeteoriteMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        meteoriteRigidbody = GetComponent<Rigidbody>();
+        meteoriteRigidbody = this.GetComponent<Rigidbody>();
         _direction = player.transform.position - transform.position;
         meteoriteRigidbody.velocity = _direction * meteoriteSpeed;
         

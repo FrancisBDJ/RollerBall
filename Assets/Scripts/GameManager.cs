@@ -1,21 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int lifes = 3;
-    [SerializeField] private int level = 1;
+    [SerializeField] private int level = 1; //Change level value in Inspector to try the other levels 
     private static GameManager _instance;
     private float _health = 100.0f;
-    private int _cubeTotal = 7;
-    private int _cubeCount = 0;
+    private int _cubeTotal;
+    private int _cubeCount;
     public bool paused;
     [SerializeField] private TextMeshProUGUI txtCubes;
     [SerializeField] public List<GameObject> lifesUI;
@@ -24,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button quitGameButton;
     [SerializeField] private TextMeshProUGUI txtTimer;
     [SerializeField] private TextMeshProUGUI txtWin;
-    [SerializeField] private Canvas gameManagerCanvas;
+    [SerializeField]private GameObject _timer;
     public int GetLevel()
     {
         return level;
@@ -34,7 +31,6 @@ public class GameManager : MonoBehaviour
     {
        
         Time.timeScale = 0f;
-        gameManagerCanvas.gameObject.SetActive(false);
         SceneManager.LoadScene("GameOverScene");
     }
     
@@ -42,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         lifes--;
         lifesUI[lifes].gameObject.SetActive(false);
-
+        
         if (lifes <= 0)
         {
             // GameOver
@@ -112,7 +108,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-    public void QuitGame()
+    private void QuitGame()
     {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
@@ -132,6 +128,26 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        _cubeTotal = 7;
+        _cubeCount = 0;
+    }
+
+    public void InitLevel2()
+    {
+        txtPause.gameObject.SetActive(false);
+        txtTimer.gameObject.SetActive(true);
+        txtWin.gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(true);
+        quitGameButton.gameObject.SetActive(false);
+        quitGameButton.onClick.AddListener(QuitGame);
+        Time.timeScale = 1.0f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        _cubeTotal = 15;
+        _cubeCount = 0;
+        _health = 100;
+        healthBar.value = _health;
+        txtCubes.text = (_cubeCount + "/" + _cubeTotal) ;
     }
     
     private void Awake()
@@ -150,7 +166,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitLevel1();
+        if (level == 1)
+        {
+            InitLevel1();  
+        }
     }
 
     // Update is called once per frame

@@ -1160,6 +1160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4437412212177930981, guid: 77a2e5561d8795e42ab6465216b6d44f, type: 3}
+      propertyPath: gameManagerCanvas
+      value: 
+      objectReference: {fileID: 4437412214087476463}
     - target: {fileID: 4437412212663526107, guid: 77a2e5561d8795e42ab6465216b6d44f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1174,6 +1178,11 @@ PrefabInstance:
       objectReference: {fileID: 963194227}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77a2e5561d8795e42ab6465216b6d44f, type: 3}
+--- !u!223 &4437412214087476463 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4437412212841096607, guid: 77a2e5561d8795e42ab6465216b6d44f, type: 3}
+  m_PrefabInstance: {fileID: 4437412214087476462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6218367993733377006
 PrefabInstance:
   m_ObjectHideFlags: 0

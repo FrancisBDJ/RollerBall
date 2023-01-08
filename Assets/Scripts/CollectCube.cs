@@ -21,22 +21,19 @@ public class CollectCube : MonoBehaviour
        
        public void Collect()
        {
-           if(collectSound)
-               AudioSource.PlayClipAtPoint(collectSound, transform.position);
-           if(collectEffect)
-               Instantiate(collectEffect, transform.position, Quaternion.identity);
+           Vector3 position = transform.position;
+           AudioSource.PlayClipAtPoint(collectSound, position);
+           Instantiate(collectEffect, position, Quaternion.identity);
            _gameManager.AddCube();
            Destroy(gameObject);
+           
        }
        
        private void OnTriggerEnter(Collider collision)
        {
            if (collision.gameObject.CompareTag("Player"))
            {
-              
-               // Add points
                Collect();
-               
            }
        }
        // Update is called once per frame
