@@ -6,7 +6,7 @@ using System.Collections;
 
 // CFX Spawn System Editor interface
 
-[CustomEditor(typeof(CFX_SpawnSystem))]
+[CustomEditor(typeof(CfxSpawnSystem))]
 public class CFX_SpawnSystemEditor : Editor
 {
 	private SerializedProperty _hideObjectsInHierarchy;
@@ -98,12 +98,12 @@ public class CFX_SpawnSystemEditor : Editor
 		EditorGUILayout.HelpBox("Drag GameObjects you want to preload here!\n\nTIP:\nUse the Inspector Lock at the top right to be able to drag multiple objects at once!", MessageType.None);
 		Rect dropRect = GUILayoutUtility.GetLastRect();
 
-		for(int i = 0; i < (this.target as CFX_SpawnSystem).objectsToPreload.Length; i++)
+		for(int i = 0; i < (this.target as CfxSpawnSystem).objectsToPreload.Length; i++)
 		{
 			GUILayout.BeginHorizontal();
 			
 			EditorGUI.BeginChangeCheck();
-			GameObject obj = (GameObject)EditorGUILayout.ObjectField((this.target as CFX_SpawnSystem).objectsToPreload[i], typeof(GameObject), true);
+			GameObject obj = (GameObject)EditorGUILayout.ObjectField((this.target as CfxSpawnSystem).objectsToPreload[i], typeof(GameObject), true);
 			if(EditorGUI.EndChangeCheck())
 			{
 #if UNITY_4_2
@@ -111,11 +111,11 @@ public class CFX_SpawnSystemEditor : Editor
 #else
 				Undo.RecordObject(target, "change Spawn System object to preload");
 #endif
-				(this.target as CFX_SpawnSystem).objectsToPreload[i] = obj;
+				(this.target as CfxSpawnSystem).objectsToPreload[i] = obj;
 			}
 			EditorGUILayout.LabelField(new GUIContent("times","Number of times to copy the effect\nin the pool, i.e. the max number of\ntimes the object will be used\nsimultaneously"), GUILayout.Width(40));
 			EditorGUI.BeginChangeCheck();
-			int nb = EditorGUILayout.IntField("", (this.target as CFX_SpawnSystem).objectsToPreloadTimes[i], GUILayout.Width(50));
+			int nb = EditorGUILayout.IntField("", (this.target as CfxSpawnSystem).objectsToPreloadTimes[i], GUILayout.Width(50));
 			if(nb < 1)
 				nb = 1;
 			if(EditorGUI.EndChangeCheck())
@@ -125,7 +125,7 @@ public class CFX_SpawnSystemEditor : Editor
 #else
 				Undo.RecordObject(target, "change Spawn System preload count");
 #endif
-				(this.target as CFX_SpawnSystem).objectsToPreloadTimes[i] = nb;
+				(this.target as CfxSpawnSystem).objectsToPreloadTimes[i] = nb;
 			}
 			
 			if(GUI.changed)
@@ -135,15 +135,15 @@ public class CFX_SpawnSystemEditor : Editor
 			
 			if(GUILayout.Button("X", EditorStyles.miniButton, GUILayout.Width(24)))
 			{
-				Object preloadedObject = (this.target as CFX_SpawnSystem).objectsToPreload[i];
+				Object preloadedObject = (this.target as CfxSpawnSystem).objectsToPreload[i];
 				string objectName = (preloadedObject == null) ? "" : preloadedObject.name;
 #if UNITY_4_2
 				Undo.RegisterUndo(target, string.Format("remove {0} from Spawn System", objectName));
 #else
 				Undo.RecordObject(target, string.Format("remove {0} from Spawn System", objectName));
 #endif
-				ArrayUtility.RemoveAt<GameObject>(ref (this.target as CFX_SpawnSystem).objectsToPreload, i);
-				ArrayUtility.RemoveAt<int>(ref (this.target as CFX_SpawnSystem).objectsToPreloadTimes, i);
+				ArrayUtility.RemoveAt<GameObject>(ref (this.target as CfxSpawnSystem).objectsToPreload, i);
+				ArrayUtility.RemoveAt<int>(ref (this.target as CfxSpawnSystem).objectsToPreloadTimes, i);
 				
 				EditorUtility.SetDirty(target);
 			}
@@ -163,7 +163,7 @@ public class CFX_SpawnSystemEditor : Editor
 					if(o is GameObject)
 					{
 						bool already = false;
-						foreach(GameObject otherObj in (this.target as CFX_SpawnSystem).objectsToPreload)
+						foreach(GameObject otherObj in (this.target as CfxSpawnSystem).objectsToPreload)
 						{
 							if(o == otherObj)
 							{
@@ -180,8 +180,8 @@ public class CFX_SpawnSystemEditor : Editor
 #else
 							Undo.RecordObject(target, string.Format("add {0} to Spawn System", o.name));
 #endif
-							ArrayUtility.Add<GameObject>(ref (this.target as CFX_SpawnSystem).objectsToPreload, (GameObject)o);
-							ArrayUtility.Add<int>(ref (this.target as CFX_SpawnSystem).objectsToPreloadTimes, 1);
+							ArrayUtility.Add<GameObject>(ref (this.target as CfxSpawnSystem).objectsToPreload, (GameObject)o);
+							ArrayUtility.Add<int>(ref (this.target as CfxSpawnSystem).objectsToPreloadTimes, 1);
 							
 							EditorUtility.SetDirty(target);
 						}

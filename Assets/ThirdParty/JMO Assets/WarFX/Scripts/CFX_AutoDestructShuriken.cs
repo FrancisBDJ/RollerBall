@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class CFX_AutoDestructShuriken : MonoBehaviour
+public class CfxAutoDestructShuriken : MonoBehaviour
 {
-	public bool OnlyDeactivate;
+	[FormerlySerializedAs("OnlyDeactivate")] public bool onlyDeactivate;
 	
 	void OnEnable()
 	{
@@ -18,7 +19,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 			yield return new WaitForSeconds(0.5f);
 			if(!GetComponent<ParticleSystem>().IsAlive(true))
 			{
-				if(OnlyDeactivate)
+				if(onlyDeactivate)
 				{
 					#if UNITY_3_5
 						this.gameObject.SetActiveRecursively(false);

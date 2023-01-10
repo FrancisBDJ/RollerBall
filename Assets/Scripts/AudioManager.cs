@@ -7,23 +7,23 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private GameObject _audioManagerGameObject;
-    public static AudioManager instance;
-    private AudioSource audioSource;
+    public static AudioManager Instance;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _audioManagerGameObject = GameObject.Find("Audio Manager");
-        if (instance != null && instance != this) {
+        if (Instance != null && Instance != this) {
             Destroy(this.gameObject);
         }
         else {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(_audioManagerGameObject);
         }
     }
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.Play();
     }
 }

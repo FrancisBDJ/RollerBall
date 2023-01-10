@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int moveSpeed = 5;
     [SerializeField] private int jumpForce = 8;
     private bool _isGrounded = true;
-    [FormerlySerializedAs("_playerRb")] [SerializeField] 
-    private Rigidbody playerRb;
+    [SerializeField] private Rigidbody playerRb;
     private void OnCollisionEnter(Collision collision)
     {
 

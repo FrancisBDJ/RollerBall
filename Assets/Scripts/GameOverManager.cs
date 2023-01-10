@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameOverManager : MonoBehaviour
 {
     
     
-    [SerializeField] private Button _btnMainMenu;
-    [SerializeField] private Button _btnTryAgain;
-    [SerializeField] private Button _btnQuitGame;
+    [FormerlySerializedAs("_btnMainMenu")] [SerializeField] private Button btnMainMenu;
+    [FormerlySerializedAs("_btnTryAgain")] [SerializeField] private Button btnTryAgain;
+    [FormerlySerializedAs("_btnQuitGame")] [SerializeField] private Button btnQuitGame;
     
     private void LoadLevel1()
     {
@@ -41,8 +42,8 @@ public class GameOverManager : MonoBehaviour
         }
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        _btnMainMenu.onClick.AddListener(GoToMainMenu);
-        _btnTryAgain.onClick.AddListener(LoadLevel1);
-        _btnQuitGame.onClick.AddListener(QuitGame);
+        btnMainMenu.onClick.AddListener(GoToMainMenu);
+        btnTryAgain.onClick.AddListener(LoadLevel1);
+        btnQuitGame.onClick.AddListener(QuitGame);
     }
 }

@@ -6,7 +6,7 @@ using System.Collections;
 // Decreases a light's intensity over time.
 
 [RequireComponent(typeof(Light))]
-public class CFX_LightIntensityFade : MonoBehaviour
+public class CfxLightIntensityFade : MonoBehaviour
 {
 	// Duration of the effect.
 	public float duration = 1.0f;
@@ -18,42 +18,42 @@ public class CFX_LightIntensityFade : MonoBehaviour
 	public float finalIntensity = 0.0f;
 	
 	// Base intensity, automatically taken from light parameters.
-	private float baseIntensity;
+	private float _baseIntensity;
 	
 	// If <c>true</c>, light will destructs itself on completion of the effect
 	public bool autodestruct;
 	
-	private float p_lifetime = 0.0f;
-	private float p_delay;
+	private float _pLifetime = 0.0f;
+	private float _pDelay;
 	
 	void Start()
 	{
-		baseIntensity = GetComponent<Light>().intensity;
+		_baseIntensity = GetComponent<Light>().intensity;
 	}
 	
 	void OnEnable()
 	{
-		p_lifetime = 0.0f;
-		p_delay = delay;
+		_pLifetime = 0.0f;
+		_pDelay = delay;
 		if(delay > 0) GetComponent<Light>().enabled = false;
 	}
 	
 	void Update ()
 	{
-		if(p_delay > 0)
+		if(_pDelay > 0)
 		{
-			p_delay -= Time.deltaTime;
-			if(p_delay <= 0)
+			_pDelay -= Time.deltaTime;
+			if(_pDelay <= 0)
 			{
 				GetComponent<Light>().enabled = true;
 			}
 			return;
 		}
 		
-		if(p_lifetime/duration < 1.0f)
+		if(_pLifetime/duration < 1.0f)
 		{
-			GetComponent<Light>().intensity = Mathf.Lerp(baseIntensity, finalIntensity, p_lifetime/duration);
-			p_lifetime += Time.deltaTime;
+			GetComponent<Light>().intensity = Mathf.Lerp(_baseIntensity, finalIntensity, _pLifetime/duration);
+			_pLifetime += Time.deltaTime;
 		}
 		else
 		{

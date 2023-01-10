@@ -8,15 +8,15 @@ using System.Collections;
 **/
 
 [RequireComponent(typeof(Light))]
-public class WFX_LightFlicker : MonoBehaviour
+public class WfxLightFlicker : MonoBehaviour
 {
 	public float time = 0.05f;
 	
-	private float timer;
+	private float _timer;
 	
 	void Start ()
 	{
-		timer = time;
+		_timer = time;
 		StartCoroutine("Flicker");
 	}
 	
@@ -28,11 +28,11 @@ public class WFX_LightFlicker : MonoBehaviour
 			
 			do
 			{
-				timer -= Time.deltaTime;
+				_timer -= Time.deltaTime;
 				yield return null;
 			}
-			while(timer > 0);
-			timer = time;
+			while(_timer > 0);
+			_timer = time;
 		}
 	}
 }

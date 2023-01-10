@@ -68,7 +68,7 @@ MonoBehaviour:
   rotationSpeed: 2
   moveSpeed: 5
   jumpForce: 8
-  _playerRb: {fileID: 1934017099479458388}
+  playerRb: {fileID: 1934017099479458388}
 --- !u!114 &6978408628834781496
 MonoBehaviour:
   m_ObjectHideFlags: 0

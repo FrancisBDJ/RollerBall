@@ -32,12 +32,12 @@ public class MeteoriteCollisions : MonoBehaviour
             
         }
         
-        else
+        if (collision.gameObject.CompareTag("Ground"))
         {
             _meteoriteAudioSource.PlayOneShot(hitFloorAudioClip, 1.0f);
             Instantiate(hitFloorParticleSystem, transform.position, Quaternion.identity);
             
         }
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 0.5f);
     }
 }

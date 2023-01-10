@@ -3,6 +3,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int lifes = 3;
     [SerializeField] private int level = 1; //Change level value in Inspector to try the other levels 
     private static GameManager _instance;
-    private float _health = 100.0f;
+    public float health = 100.0f;
     private int _score;
     private int _cubeTotal;
     private int _cubeCount;
@@ -58,10 +59,10 @@ public class GameManager : MonoBehaviour
     
     public void TakeDamage(float damageAmount)
     {
-        _health = _health - damageAmount;
-        healthBar.value = _health;
+        health = health - damageAmount;
+        healthBar.value = health;
  
-        if (_health <= 0f)
+        if (health <= 0f)
         {
             // die
             LoseLife();
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            txtWin.text = "You Winned all 3 levels. Congratulations";
+            txtWin.text = "You have won all 3 levels. Congratulations";
         }
     }
 
@@ -179,15 +180,17 @@ public class GameManager : MonoBehaviour
         quitGameButton.onClick.AddListener(QuitGame);
         nextLevelButton.gameObject.SetActive(false);
         nextLevelButton.onClick.AddListener(NextLevel);
+        Timer.ResetTimer();
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 15;
         _cubeCount = 0;
-        _health = 100.0f;
-        healthBar.value = _health;
+        health = 100.0f;
+        healthBar.value = health;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal);
         txtScore.text = _score + " pts";
+        
     }
     
     public void InitLevel3()
@@ -202,13 +205,14 @@ public class GameManager : MonoBehaviour
         quitGameButton.onClick.AddListener(QuitGame);
         nextLevelButton.gameObject.SetActive(false);
         nextLevelButton.onClick.AddListener(NextLevel);
+        Timer.ResetTimer();
         Time.timeScale = 1.0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _cubeTotal = 20;
         _cubeCount = 0;
-        _health = 100.0f;
-        healthBar.value = _health;
+        health = 100.0f;
+        healthBar.value = health;
         txtCubes.text = (_cubeCount + "/" + _cubeTotal);
         txtScore.text = _score + " pts";
     }
@@ -224,6 +228,12 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    public void AddHealth()
+    {
+        health = 100;
+        healthBar.value = health;
     }
 
     // Start is called before the first frame update

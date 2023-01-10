@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollectCube : MonoBehaviour
 {
        private GameManager _gameManager;
-       public float rotationSpeed = 20f;
+       public float rotationSpeed = 25f;
       
        
        public AudioClip collectSound;
